@@ -5,19 +5,16 @@
  *
  * See the accompanying LICENSE file for applicable license.
  */
-apply plugin: 'java'
-apply plugin: 'maven-publish'
+apply plugin: 'java-library'
 
-group = 'org.dita-ot.pdf'
-
+group = 'org.dita.pdf'
+version = '3.7.0-SNAPSHOT'
 description = """DITA Open Toolkit PDF plug-in for AntennaHouse Renderer."""
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 dependencies {
-    implementation rootProject
     implementation group: 'org.apache.ant', name: 'ant', version:'1.10.9'
     testImplementation group: 'junit', name: 'junit', version:'4.12'
 }
@@ -35,16 +32,26 @@ sourceSets {
 }
 
 jar.archiveFileName = "${project.name}.jar"
-//jar.include "com/idiominc/**"
 
-task copyInstall(type: Copy) {
-    from (configurations.runtimeClasspath.allArtifacts.files)
-    destinationDir = file("lib")
-}
-
-task copyDistTemp(type: Copy) {
-    from (configurations.runtimeClasspath.allArtifacts.files) {
-        into "plugins/org.dita.pdf2.axf/lib"
+task dist(type: Zip, dependsOn: [jar]) {
+    from(configurations.archives.artifacts.files) {
+        into("lib")
     }
-    destinationDir = file("${rootProject.buildDir}/tmp/dist")
+    from(".") {
+        include "LICENSE"
+        include "README.md"
+    }
+    from(".") {
+        include "build.xml"
+        include "xsl/**"
+    }
+    from(".") {
+        include "plugin.xml"
+        expand(
+                id: "${project.group}.${project.archivesBaseName}",
+                version: project.version,
+                jar: "lib/${jar.archiveFileName.get()}"
+        )
+    }
+    archiveFileName = "${project.group}.${project.archivesBaseName}-${project.version}.zip"
 }
