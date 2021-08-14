@@ -43,6 +43,7 @@ task dist(type: Zip, dependsOn: [jar]) {
     }
     from(".") {
         include "build.xml"
+        include "cfg/**"
         include "xsl/**"
     }
     from(".") {
