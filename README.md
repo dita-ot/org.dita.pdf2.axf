@@ -12,7 +12,7 @@ Installation
 ------------
 
 Standard DITA-OT plug-in installation,
-see [DITA-OT documentation](http://www.dita-ot.org/2.5/dev_ref/plugins-installing.html).
+see [DITA-OT documentation](https://www.dita-ot.org/3.6/topics/plugins-installing.html).
 
 ```shell
 $ dita install org.dita.pdf2.axf
