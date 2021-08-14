@@ -8,7 +8,7 @@
 apply plugin: 'java-library'
 
 group = 'org.dita.pdf'
-version = '3.7.0-SNAPSHOT'
+version = '3.6.1'
 description = """DITA Open Toolkit PDF plug-in for AntennaHouse Renderer."""
 
 repositories {
